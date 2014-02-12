@@ -52,6 +52,13 @@ class WordGraph(object):
         :return: Bool True if word_a and word_b are neighbours. I.e. 1 letter
                       apart
         """
+
+        # If they are to be neighbours they can have at most 1 letter out of
+        # place, therefore if their lengths differ by more than 1 they're not
+        # connected
+        if abs(len(word_a) - len(word_b)) > 1:
+            return False
+
         matches = SequenceMatcher(a=word_a, b=word_b).get_matching_blocks()
 
         # The number of matching chars will be the size of all the matching
