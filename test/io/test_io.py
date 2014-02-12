@@ -43,3 +43,10 @@ class TestIO(TestCase):
 
         for value in values:
             self.assertIsInstance(value, str)
+
+    def test_path_output_format(self):
+        io = IO()
+        word_path = ["hat", "mat", "bat"]
+        formatted_path = io.format_word_path(word_path)
+
+        self.assertEqual(formatted_path, "hat -> mat -> bat")

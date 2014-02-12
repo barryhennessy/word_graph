@@ -17,3 +17,11 @@ class IO(object):
                 if line:
                     yield str(line)
 
+    def format_word_path(self, word_path):
+        """Formats the path given as foo -> bar -> baz
+
+        :param word_path: A list of words connected to each-other
+
+        :return: A string in the appropriate format
+        """
+        return " -> ".join(word_path)
