@@ -20,6 +20,20 @@ class TestWordGraph(TestCase):
 
         self.assertTrue(graph.are_connected("hat", "mat"))
 
+    def test_are_connected_regardless_of_input_case(self):
+        graph = WordGraph()
+        graph.add("hat")
+        graph.add("maT")
+
+        self.assertTrue(graph.are_connected("hat", "maT"))
+
+    def test_are_connected_regardless_of_search_case(self):
+        graph = WordGraph()
+        graph.add("hat")
+        graph.add("mat")
+
+        self.assertTrue(graph.are_connected("hat", "MaT"))
+
     def test_connection_with_off_length_words(self):
         graph = WordGraph()
         graph.add("boo")

@@ -8,7 +8,7 @@ class WordGraph(object):
 
     def __init__(self):
         """Initialises the graph"""
-        self.graph = {}
+        self._graph = {}
 
     def are_connected(self, node_a, node_b):
         """Determines whether node_a and node_b are directly connected
@@ -18,7 +18,10 @@ class WordGraph(object):
 
         :return: Bool. True if connected, false otherwise
         """
-        return node_a in self.graph[node_b]
+        node_a = node_a.lower()
+        node_b = node_b.lower()
+
+        return node_a in self._graph[node_b]
 
     def add(self, word):
         """Adds word to the graph
@@ -27,9 +30,12 @@ class WordGraph(object):
 
         :return: None
         """
-        if word not in self.graph:
-            pre_existing_keys = self.graph.keys()
-            self.graph[word] = []
+
+        word = word.lower()
+
+        if word not in self._graph:
+            pre_existing_keys = self._graph.keys()
+            self._graph[word] = []
             for existing_word in pre_existing_keys:
                 if self._is_neighbouring(word, existing_word):
                     self._connect_nodes(word, existing_word)
@@ -68,8 +74,8 @@ class WordGraph(object):
 
         :return: None
         """
-        self.graph[node_a].append(node_b)
-        self.graph[node_b].append(node_a)
+        self._graph[node_a].append(node_b)
+        self._graph[node_b].append(node_a)
 
     def find_path(self, from_node, to_node, path=[]):
         """Finds a path from from_node to to_node (if any exist)
@@ -99,7 +105,7 @@ class WordGraph(object):
         if from_node == to_node:
             return path
 
-        for node in self.graph[from_node]:
+        for node in self._graph[from_node]:
             if node not in path:
                 new_path = self.find_path(node, to_node, path)
                 if new_path:
@@ -140,7 +146,7 @@ class WordGraph(object):
 
         paths = []
 
-        for node in self.graph[from_node]:
+        for node in self._graph[from_node]:
             if node not in path:
                 new_paths = self.find_all_paths(node, to_node, path)
                 if new_paths:
@@ -166,10 +172,10 @@ class WordGraph(object):
                            the graph
         """
 
-        if from_node not in self.graph:
+        if from_node not in self._graph:
             raise KeyError("The source node must be in the graph")
 
-        if to_node not in self.graph:
+        if to_node not in self._graph:
             raise KeyError("The destination node must be in the graph")
 
         # If our initial call is to find a path from one node to itself we
